@@ -1,33 +1,36 @@
 package com.example.feedback.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "USER_FEEDBACK")
+@Table(name = "FEEDBACK")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Feedback {
+
     @Id
     @Column
     private UUID feedbackId;
 
-    @Column
-    private String feedbackDescription;
+    @OneToOne
+    private User requestedForUser;
 
     @Column
-    private String feedback;
+    private String description;
 
     @Column
     private Date creationDate;
 
-    @Column
-    private Boolean feedbackStatus;
-
-    @OneToOne
-    private User fromUser;
-
-    @OneToOne
-    private User toUser;
+    @OneToMany(mappedBy = "feedback", cascade = CascadeType.ALL)
+    List<FeedbackDetails> feedbackDetails;
 
     public UUID getFeedbackId() {
         return feedbackId;
@@ -37,12 +40,20 @@ public class Feedback {
         this.feedbackId = feedbackId;
     }
 
-    public String getFeedback() {
-        return feedback;
+    public User getRequestedForUser() {
+        return requestedForUser;
     }
 
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
+    public void setRequestedForUser(User requestedForUser) {
+        this.requestedForUser = requestedForUser;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getCreationDate() {
@@ -53,35 +64,11 @@ public class Feedback {
         this.creationDate = creationDate;
     }
 
-    public User getFromUser() {
-        return fromUser;
+    public List<FeedbackDetails> getFeedbackDetails() {
+        return feedbackDetails;
     }
 
-    public void setFromUser(User fromUser) {
-        this.fromUser = fromUser;
-    }
-
-    public User getToUser() {
-        return toUser;
-    }
-
-    public void setToUser(User toUser) {
-        this.toUser = toUser;
-    }
-
-    public Boolean getFeedbackStatus() {
-        return feedbackStatus;
-    }
-
-    public void setFeedbackStatus(Boolean feedbackStatus) {
-        this.feedbackStatus = feedbackStatus;
-    }
-
-    public String getFeedbackDescription() {
-        return feedbackDescription;
-    }
-
-    public void setFeedbackDescription(String feedbackDescription) {
-        this.feedbackDescription = feedbackDescription;
+    public void setFeedbackDetails(List<FeedbackDetails> feedbackDetails) {
+        this.feedbackDetails = feedbackDetails;
     }
 }

@@ -1,5 +1,9 @@
 package com.example.feedback.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,6 +12,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "FEEDBACK_USER")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
 
     @Id
